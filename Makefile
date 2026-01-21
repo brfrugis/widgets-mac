@@ -26,6 +26,12 @@ bundle: build
 	@mkdir -p "$(BUNDLE_NAME)/Contents/Resources"
 	@cp $(BUILD_DIR)/WorldClock "$(BUNDLE_NAME)/Contents/MacOS/"
 	@cp Sources/WorldClock/Info.plist "$(BUNDLE_NAME)/Contents/"
+	@if [ -f AppIcon.icns ]; then \
+		cp AppIcon.icns "$(BUNDLE_NAME)/Contents/Resources/"; \
+		echo "Icon added to bundle"; \
+	else \
+		echo "⚠️  Warning: AppIcon.icns not found. Run './create-icon.sh' first."; \
+	fi
 	@echo "App bundle created: $(BUNDLE_NAME)"
 
 dmg: bundle
