@@ -8,7 +8,7 @@ DMG_DIR = dmg_temp
 
 build:
 	@echo "Building World Clock..."
-	swift build -c release --arch arm64 --arch x86_64
+	swift build -c release
 
 run:
 	@echo "Running World Clock..."

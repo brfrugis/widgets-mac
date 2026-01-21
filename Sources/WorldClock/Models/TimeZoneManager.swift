@@ -65,7 +65,7 @@ class TimeZoneManager: ObservableObject {
             selectedTimeZones.append(TimeZoneInfo(from: local))
         }
         
-        let defaults = ["America/New_York", "Europe/London", "Asia/Tokyo"]
+        let defaults = ["America/Sao_Paulo", "America/New_York", "Europe/London"]
         for identifier in defaults {
             if selectedTimeZones.count >= maxTimeZones { break }
             if let tz = TimeZone(identifier: identifier) {
@@ -80,7 +80,7 @@ class TimeZoneManager: ObservableObject {
     }
 }
 
-struct TimeZoneInfo: Identifiable, Codable, Hashable {
+struct TimeZoneInfo: Identifiable, Hashable {
     let id = UUID()
     let identifier: String
     let city: String
@@ -89,13 +89,14 @@ struct TimeZoneInfo: Identifiable, Codable, Hashable {
     init(from timeZone: TimeZone) {
         self.identifier = timeZone.identifier
         
-        // Parse city and country from identifier
+        // Get proper country name from mapping
+        self.country = TimeZoneData.getCountryName(for: timeZone.identifier)
+        
+        // Parse city from identifier
         let components = timeZone.identifier.split(separator: "/")
         if components.count >= 2 {
-            self.country = String(components[0])
             self.city = String(components[1]).replacingOccurrences(of: "_", with: " ")
         } else {
-            self.country = ""
             self.city = timeZone.identifier.replacingOccurrences(of: "_", with: " ")
         }
     }

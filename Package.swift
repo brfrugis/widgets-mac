@@ -18,7 +18,8 @@ let package = Package(
         .executableTarget(
             name: "WorldClock",
             dependencies: [],
-            path: "Sources/WorldClock"
+            path: "Sources/WorldClock",
+            exclude: ["Info.plist"]
         )
     ]
 )
